@@ -79,6 +79,7 @@ export async function POST(request: Request) {
 
   if (itemsError) {
     console.error("checkout order_items insert failed:", itemsError.message);
+    await admin.from("orders").delete().eq("id", order.id);
     return NextResponse.json({ error: "Could not create order items" }, { status: 500 });
   }
 
@@ -96,6 +97,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ authorizationUrl: authorization_url, reference });
   } catch (err) {
     console.error("Paystack initialize failed:", err);
+    await admin.from("orders").delete().eq("id", order.id);
     return NextResponse.json({ error: "Could not start payment" }, { status: 500 });
   }
 }
