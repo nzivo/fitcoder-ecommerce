@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(39 8% 19%)" />
+      <stop offset="1" stop-color="hsl(40 8% 20%)" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" fill="url(#g)" />
+  <g fill="none" stroke="hsl(0 0% 92%)" stroke-width="1.2" opacity="0.4" transform="translate(105,15)">
+    <path d="M85 60 L70 40 L50 55 L30 40 L15 60 L25 90 L35 85 L35 170 L165 170 L165 85 L175 90 L185 60 L170 40 L150 55 L130 40 L115 60 L100 50 Z" />
+  </g>
+  <text x="18" y="182" font-family="Arial, sans-serif" font-size="9" fill="hsl(0 0% 92%)" opacity="0.8" letter-spacing="2">WINTER COLLECTION</text>
+</svg>
