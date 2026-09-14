@@ -26,58 +26,62 @@ export default function Header() {
         New customers save 10% off
       </div>
 
-      <div className="flex items-center justify-between px-4 sm:px-6 py-4 max-w-[1600px] mx-auto">
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((v) => !v)}
-          className="p-1 md:hidden"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-2 sm:gap-4 px-4 sm:px-6 py-4 max-w-[1600px] mx-auto">
+        <div className="flex items-center gap-6 min-w-0">
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMenuOpen((v) => !v)}
+            className="p-1 md:hidden"
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
 
-        <nav className="hidden md:flex items-center gap-6 text-xs tracking-widest-xl uppercase flex-1">
-          {NAV_LINKS.slice(0, 3).map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-muted transition-colors">
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+          <nav className="hidden md:flex items-center gap-6 text-xs tracking-widest-xl uppercase">
+            {NAV_LINKS.slice(0, 3).map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-muted transition-colors">
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         <Link
           href="/"
-          className="font-display text-xl sm:text-2xl tracking-[0.15em] uppercase absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
+          className="font-display text-base sm:text-2xl tracking-[0.08em] sm:tracking-[0.15em] uppercase justify-self-center whitespace-nowrap"
         >
           Fit Coder
         </Link>
 
-        <div className="hidden md:flex items-center gap-6 text-xs tracking-widest-xl uppercase flex-1 justify-end">
-          {NAV_LINKS.slice(3).map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-muted transition-colors">
-              {l.label}
-            </Link>
-          ))}
-        </div>
+        <div className="flex items-center gap-6 min-w-0 justify-end">
+          <nav className="hidden md:flex items-center gap-6 text-xs tracking-widest-xl uppercase">
+            {NAV_LINKS.slice(3).map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-muted transition-colors">
+                {l.label}
+              </Link>
+            ))}
+          </nav>
 
-        <div className="flex items-center gap-4 ml-auto md:ml-0">
-          <ThemeToggle />
-          <button aria-label="Search" className="p-1 hover:text-muted transition-colors">
-            <Search size={19} />
-          </button>
-          <Link href="/account" aria-label="Account" className="p-1 hover:text-muted transition-colors">
-            <User size={19} />
-          </Link>
-          <button
-            aria-label="Open cart"
-            onClick={openCart}
-            className="relative p-1 hover:text-muted transition-colors"
-          >
-            <ShoppingBag size={19} />
-            {count > 0 && (
-              <span className="absolute -top-1 -right-1 bg-foreground text-background text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
-                {count}
-              </span>
-            )}
-          </button>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <ThemeToggle />
+            <button aria-label="Search" className="p-1 hover:text-muted transition-colors">
+              <Search size={19} />
+            </button>
+            <Link href="/account" aria-label="Account" className="p-1 hover:text-muted transition-colors">
+              <User size={19} />
+            </Link>
+            <button
+              aria-label="Open cart"
+              onClick={openCart}
+              className="relative p-1 hover:text-muted transition-colors"
+            >
+              <ShoppingBag size={19} />
+              {count > 0 && (
+                <span className="absolute -top-1 -right-1 bg-foreground text-background text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
+                  {count}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
