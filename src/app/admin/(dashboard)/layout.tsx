@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LayoutDashboard, Package, ShoppingCart, ExternalLink } from "lucide-react";
 import SignOutButton from "@/components/SignOutButton";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 import { createClient } from "@/lib/supabase/server";
 
 const NAV = [
@@ -18,10 +19,13 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
   return (
     <div className="min-h-[calc(100vh-1px)] grid grid-cols-1 md:grid-cols-[220px_1fr] bg-background">
       <aside className="border-r border-border md:min-h-screen p-6 flex flex-col">
-        <Link href="/admin" className="font-display text-lg uppercase tracking-widest-xl mb-8">
-          Fit Coder
-          <span className="block text-[10px] text-muted tracking-widest-xl mt-1">Admin</span>
-        </Link>
+        <div className="flex items-start justify-between mb-8">
+          <Link href="/admin" className="font-display text-lg uppercase tracking-widest-xl">
+            Fit Coder
+            <span className="block text-[10px] text-muted tracking-widest-xl mt-1">Admin</span>
+          </Link>
+          <ThemeToggle />
+        </div>
 
         <nav className="flex flex-col gap-1 text-sm">
           {NAV.map(({ href, label, icon: Icon }) => (

@@ -2,7 +2,10 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-b from-[#12211f] via-[#0f1614] to-background overflow-hidden">
+    <section
+      data-theme="dark"
+      className="relative bg-gradient-to-b from-[#12211f] via-[#0f1614] to-background overflow-hidden text-foreground"
+    >
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-14 pb-24 text-center">
         <p className="text-xs tracking-widest-xl uppercase text-muted mb-4">Lifestyle of Legends</p>
         <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl uppercase leading-[0.95] max-w-4xl mx-auto">

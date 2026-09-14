@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Menu, Search, User, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { useCartStore, cartCount } from "@/lib/cart-store";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/shop", label: "Shop All" },
@@ -58,6 +59,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-4 ml-auto md:ml-0">
+          <ThemeToggle />
           <button aria-label="Search" className="p-1 hover:text-muted transition-colors">
             <Search size={19} />
           </button>
