@@ -81,7 +81,7 @@ const products = [
 for (const [file, label, kind] of products) {
   writeFileSync(
     join(publicDir, "products", `${file}.svg`),
-    svgFor({ label, sub: "DOPE BEYOND", kind }),
+    svgFor({ label, sub: "FIT CODER", kind }),
   );
 }
 

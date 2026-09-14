@@ -1,4 +1,4 @@
--- Dope Beyond: core schema, RLS policies, and starter seed data.
+-- Fit Coder: core schema, RLS policies, and starter seed data.
 
 create extension if not exists "pgcrypto";
 

@@ -6,8 +6,8 @@ export default function ReturnsPage() {
       <p>Unworn items in original condition can be returned within 14 days of delivery for a full refund.</p>
       <p>
         To start a return, email{" "}
-        <a href="mailto:support@dopebeyond.com" className="underline">
-          support@dopebeyond.com
+        <a href="mailto:support@fitcoder.com" className="underline">
+          support@fitcoder.com
         </a>{" "}
         with your order reference.
       </p>

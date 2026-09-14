@@ -1,4 +1,4 @@
-# Dope Beyond
+# Fit Coder
 
 A Next.js (App Router, TypeScript) storefront with a Supabase backend, Paystack payments
 (card + M-Pesa), and an admin dashboard for managing products and orders. Designed to deploy

@@ -57,7 +57,7 @@ export const useCartStore = create<CartState>()(
         }),
       clear: () => set({ items: [] }),
     }),
-    { name: "dope-beyond-cart" },
+    { name: "fit-coder-cart" },
   ),
 );
 

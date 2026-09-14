@@ -7,21 +7,21 @@ export default function StorySection() {
         <div className="relative h-[340px] sm:h-[420px]">
           <div className="absolute left-0 top-0 w-2/3 h-4/5 bg-surface-2 overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/lifestyle/story-1.svg" alt="Dope Beyond lifestyle" className="w-full h-full object-cover" />
+            <img src="/lifestyle/story-1.svg" alt="Fit Coder lifestyle" className="w-full h-full object-cover" />
           </div>
           <div className="absolute right-0 bottom-0 w-2/3 h-4/5 bg-surface-2 overflow-hidden border-4 border-background">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/lifestyle/story-2.svg" alt="Dope Beyond lifestyle" className="w-full h-full object-cover" />
+            <img src="/lifestyle/story-2.svg" alt="Fit Coder lifestyle" className="w-full h-full object-cover" />
           </div>
         </div>
 
         <div className="max-w-md">
           <p className="text-xs tracking-widest-xl uppercase text-muted mb-3">Our Story</p>
           <h2 className="font-display text-3xl sm:text-4xl uppercase leading-tight mb-5">
-            Move with Dope Forever
+            Move with Fit Coder Forever
           </h2>
           <p className="text-sm text-muted mb-7">
-            Dope Beyond creates exclusive streetwear pieces designed for individuals who embrace
+            Fit Coder creates exclusive streetwear pieces designed for individuals who embrace
             creativity, confidence, and originality.
           </p>
           <Link

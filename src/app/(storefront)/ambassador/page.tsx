@@ -4,9 +4,9 @@ export default function AmbassadorPage() {
   return (
     <SimplePage title="Ambassador Program">
       <p>
-        Represent Dope Beyond and earn commission on every sale. Email{" "}
-        <a href="mailto:partners@dopebeyond.com" className="underline">
-          partners@dopebeyond.com
+        Represent Fit Coder and earn commission on every sale. Email{" "}
+        <a href="mailto:partners@fitcoder.com" className="underline">
+          partners@fitcoder.com
         </a>{" "}
         to apply.
       </p>

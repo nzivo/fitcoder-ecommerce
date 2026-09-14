@@ -1,5 +1,5 @@
 const ITEMS = [
-  "Dope Beyond",
+  "Fit Coder",
   "Lifestyle of Legends",
   "Shop Trending",
   "New Drops",

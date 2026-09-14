@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className="bg-background border-t border-border">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
-          <p className="font-display text-lg tracking-[0.15em] uppercase mb-3">Dope Beyond</p>
+          <p className="font-display text-lg tracking-[0.15em] uppercase mb-3">Fit Coder</p>
           <p className="text-sm text-muted max-w-xs">
-            Dope Beyond isn&apos;t just a clothing brand. It&apos;s your statement to the world.
+            Fit Coder isn&apos;t just a clothing brand. It&apos;s your statement to the world.
           </p>
           <div className="mt-5 text-muted">
             <SocialIcons size={18} />
@@ -43,7 +43,7 @@ export default function Footer() {
 
       <div className="border-t border-border">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted tracking-wide">
-          <p>© {new Date().getFullYear()} Dope Beyond</p>
+          <p>© {new Date().getFullYear()} Fit Coder</p>
           <p className="uppercase tracking-widest-xl">Secure Checkout</p>
         </div>
       </div>

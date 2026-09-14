@@ -19,7 +19,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
     <div className="min-h-[calc(100vh-1px)] grid grid-cols-1 md:grid-cols-[220px_1fr] bg-background">
       <aside className="border-r border-border md:min-h-screen p-6 flex flex-col">
         <Link href="/admin" className="font-display text-lg uppercase tracking-widest-xl mb-8">
-          Dope Beyond
+          Fit Coder
           <span className="block text-[10px] text-muted tracking-widest-xl mt-1">Admin</span>
         </Link>
 

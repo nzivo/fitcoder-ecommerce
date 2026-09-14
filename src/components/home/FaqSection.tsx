@@ -29,12 +29,12 @@ export default function FaqSection() {
           </h2>
           <p className="text-sm text-muted max-w-sm">
             Questions about your order? We&apos;re here to help. Whether it&apos;s sizing, shipping, or
-            returns, the Dope Beyond team has you covered.
+            returns, the Fit Coder team has you covered.
           </p>
           <p className="text-sm text-muted mt-3">
             Reach us via{" "}
-            <a href="mailto:support@dopebeyond.com" className="underline">
-              support@dopebeyond.com
+            <a href="mailto:support@fitcoder.com" className="underline">
+              support@fitcoder.com
             </a>
           </p>
         </div>

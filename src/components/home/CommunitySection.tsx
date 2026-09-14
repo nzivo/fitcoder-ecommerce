@@ -13,7 +13,7 @@ export default function CommunitySection() {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-8">
           <p className="text-xs tracking-widest-xl uppercase text-muted mb-2">
-            Tag @dopebeyond for a chance to be featured
+            Tag @fitcoder for a chance to be featured
           </p>
           <h2 className="font-display text-2xl sm:text-3xl uppercase">Join Our Community</h2>
         </div>

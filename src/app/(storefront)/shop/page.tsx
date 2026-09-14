@@ -15,7 +15,7 @@ const FAQS = [
     a: "Yes — unworn items in original condition can be returned or exchanged within 14 days of delivery.",
   },
   {
-    q: "How do Dope Beyond clothes fit?",
+    q: "How do Fit Coder clothes fit?",
     a: "Our pieces run true to size with a relaxed, heavyweight streetwear fit. Check the size guide on each product page if you're between sizes.",
   },
   {
@@ -80,13 +80,13 @@ export default async function ShopPage({
           </h2>
           <p className="text-sm text-muted max-w-sm">
             Got questions about your gear? Don&apos;t worry, we&apos;ve got you covered. Whether it&apos;s
-            sizing, shipping, or returns, the Dope Beyond team is here to help you live the Lifestyle of
+            sizing, shipping, or returns, the Fit Coder team is here to help you live the Lifestyle of
             Legends without the hassle.
           </p>
           <p className="text-sm text-muted mt-3">
             Need immediate assistance? Reach us via{" "}
-            <a href="mailto:support@dopebeyond.com" className="underline">
-              support@dopebeyond.com
+            <a href="mailto:support@fitcoder.com" className="underline">
+              support@fitcoder.com
             </a>
           </p>
         </div>

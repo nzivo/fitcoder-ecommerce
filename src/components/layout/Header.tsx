@@ -46,7 +46,7 @@ export default function Header() {
           href="/"
           className="font-display text-xl sm:text-2xl tracking-[0.15em] uppercase absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
-          Dope Beyond
+          Fit Coder
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-xs tracking-widest-xl uppercase flex-1 justify-end">
