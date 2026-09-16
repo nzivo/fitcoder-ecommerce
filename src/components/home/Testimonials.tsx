@@ -1,29 +1,11 @@
 import { Star } from "lucide-react";
+import type { Testimonial } from "@/types/database";
 
-const REVIEWS = [
-  {
-    name: "Owen Clarke",
-    product: "Signature 555 Angel Number",
-    quote: "If you're into manifestation and angel numbers this is a must cop. Grey is clean and versatile with everything.",
-  },
-  {
-    name: "Tyrese Hamilton",
-    product: "Signature 444 Heavyweight",
-    quote: "Not usually a yellow guy but I saw this on socials and had to try. Got compliments on this all night.",
-  },
-  {
-    name: "Andre Whitfield",
-    product: "Signature 555 Angel Number",
-    quote: "Brown shade is perfect, not too dark not too light either. Quality is good, heavy cotton, well made.",
-  },
-  {
-    name: "Miguel Santos",
-    product: "Signature 222 Heavyweight",
-    quote: "The red caught my eye so I locked up with 222 meaning. Quality is legit impressive, heavyweight, well made.",
-  },
-];
+export default function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
+  if (testimonials.length === 0) return null;
 
-export default function Testimonials() {
+  const avgRating = testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length;
+
   return (
     <section className="bg-background py-16">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
@@ -35,21 +17,23 @@ export default function Testimonials() {
                 <Star key={i} size={14} fill="currentColor" />
               ))}
             </span>
-            <span>4.82 · 274 Reviews</span>
+            <span>
+              {avgRating.toFixed(2)} · {testimonials.length} Reviews
+            </span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {REVIEWS.map((r) => (
-            <div key={r.name} className="border border-border p-5">
+          {testimonials.map((t) => (
+            <div key={t.id} className="border border-border p-5">
               <span className="flex text-foreground mb-3">
-                {Array.from({ length: 5 }).map((_, i) => (
+                {Array.from({ length: t.rating }).map((_, i) => (
                   <Star key={i} size={12} fill="currentColor" />
                 ))}
               </span>
-              <p className="text-sm text-muted mb-4">&ldquo;{r.quote}&rdquo;</p>
-              <p className="text-sm">{r.name}</p>
-              <p className="text-xs text-muted">{r.product}</p>
+              <p className="text-sm text-muted mb-4">&ldquo;{t.quote}&rdquo;</p>
+              <p className="text-sm">{t.customer_name}</p>
+              {t.product_name && <p className="text-xs text-muted">{t.product_name}</p>}
             </div>
           ))}
         </div>

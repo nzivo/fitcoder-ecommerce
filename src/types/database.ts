@@ -13,6 +13,47 @@ export type Category = {
   slug: string;
   image_url: string | null;
   sort_order: number;
+  is_active: boolean;
+  created_at: string;
+};
+
+export type SiteSectionId = "hero" | "story" | "winter_banner" | "lifestyle_banner";
+
+export type SiteSection = {
+  id: SiteSectionId;
+  eyebrow: string | null;
+  title: string | null;
+  subtitle: string | null;
+  body: string | null;
+  image_url: string | null;
+  image_url_2: string | null;
+  cta_label: string | null;
+  cta_href: string | null;
+  cta2_label: string | null;
+  cta2_href: string | null;
+  updated_at: string;
+};
+
+export type Testimonial = {
+  id: string;
+  customer_name: string;
+  product_name: string | null;
+  rating: number;
+  quote: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+};
+
+export type FaqPlacement = "home" | "shop";
+
+export type Faq = {
+  id: string;
+  placement: FaqPlacement;
+  question: string;
+  answer: string;
+  sort_order: number;
+  is_active: boolean;
   created_at: string;
 };
 
@@ -91,7 +132,10 @@ type TableDef<Row, InsertDefaults extends keyof Row = never> = {
 export type Database = {
   public: {
     Tables: {
-      categories: TableDef<Category, "id" | "created_at" | "sort_order">;
+      categories: TableDef<Category, "id" | "created_at" | "sort_order" | "is_active">;
+      site_sections: TableDef<SiteSection, "updated_at">;
+      testimonials: TableDef<Testimonial, "id" | "created_at" | "sort_order" | "is_active" | "rating">;
+      faqs: TableDef<Faq, "id" | "created_at" | "sort_order" | "is_active" | "placement">;
       products: TableDef<
         Product,
         | "id"

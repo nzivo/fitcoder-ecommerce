@@ -2,27 +2,8 @@ import ProductCard from "@/components/ProductCard";
 import SortSelect from "@/components/shop/SortSelect";
 import TrustBadges from "@/components/shop/TrustBadges";
 import FaqAccordion from "@/components/FaqAccordion";
-import { getProducts } from "@/lib/data";
+import { getFaqs, getProducts } from "@/lib/data";
 import type { Product } from "@/types/database";
-
-const FAQS = [
-  {
-    q: "How long does it take to get my products?",
-    a: "Standard delivery within Kenya takes 2–4 business days. International orders take 7–14 business days depending on destination.",
-  },
-  {
-    q: "Do you offer refunds or exchanges?",
-    a: "Yes — unworn items in original condition can be returned or exchanged within 14 days of delivery.",
-  },
-  {
-    q: "How do Fit Coder clothes fit?",
-    a: "Our pieces run true to size with a relaxed, heavyweight streetwear fit. Check the size guide on each product page if you're between sizes.",
-  },
-  {
-    q: "How do I keep my gear fresh? (Care Instructions)",
-    a: "Machine wash cold, inside out, with like colors. Tumble dry low or hang dry to preserve print and fabric quality.",
-  },
-];
 
 function sortProducts(products: Product[], sort: string | undefined) {
   const sorted = [...products];
@@ -46,7 +27,11 @@ export default async function ShopPage({
   searchParams: Promise<{ category?: string; sort?: string }>;
 }) {
   const { category, sort } = await searchParams;
-  const products = sortProducts(await getProducts({ categorySlug: category }), sort);
+  const [rawProducts, faqs] = await Promise.all([
+    getProducts({ categorySlug: category }),
+    getFaqs("shop"),
+  ]);
+  const products = sortProducts(rawProducts, sort);
 
   return (
     <div>
@@ -90,7 +75,7 @@ export default async function ShopPage({
             </a>
           </p>
         </div>
-        <FaqAccordion items={FAQS} />
+        <FaqAccordion items={faqs.map((f) => ({ q: f.question, a: f.answer }))} />
       </div>
 
       <TrustBadges />

@@ -1,25 +1,7 @@
 import FaqAccordion from "@/components/FaqAccordion";
+import type { Faq } from "@/types/database";
 
-const FAQS = [
-  {
-    q: "How long does delivery take?",
-    a: "Standard delivery within Kenya takes 2–4 business days. International orders take 7–14 business days depending on destination.",
-  },
-  {
-    q: "Do you offer refunds?",
-    a: "Yes — unworn items in original condition can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    q: "How do I care for my clothing?",
-    a: "Machine wash cold, inside out, with like colors. Tumble dry low or hang dry to preserve print and fabric quality.",
-  },
-  {
-    q: "Where can I track my order?",
-    a: "Once your order ships you'll receive a tracking link by email. You can also view order status from your account page.",
-  },
-];
-
-export default function FaqSection() {
+export default function FaqSection({ faqs }: { faqs: Faq[] }) {
   return (
     <section className="bg-surface py-16">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -38,7 +20,7 @@ export default function FaqSection() {
             </a>
           </p>
         </div>
-        <FaqAccordion items={FAQS} />
+        <FaqAccordion items={faqs.map((f) => ({ q: f.question, a: f.answer }))} />
       </div>
     </section>
   );

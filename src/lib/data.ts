@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { Category, Product } from "@/types/database";
+import type { Category, Faq, FaqPlacement, Product, SiteSection, SiteSectionId, Testimonial } from "@/types/database";
 
 function supabaseConfigured() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -61,4 +61,54 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .single();
   if (error) return null;
   return data;
+}
+
+export async function getSiteSection(id: SiteSectionId): Promise<SiteSection | null> {
+  if (!supabaseConfigured()) return null;
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("site_sections").select("*").eq("id", id).single();
+  if (error) return null;
+  return data;
+}
+
+export async function getSiteSections(): Promise<Record<string, SiteSection>> {
+  if (!supabaseConfigured()) return {};
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("site_sections").select("*");
+  if (error) {
+    console.error("getSiteSections:", error.message);
+    return {};
+  }
+  return Object.fromEntries((data ?? []).map((s) => [s.id, s]));
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  if (!supabaseConfigured()) return [];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("is_active", true)
+    .order("sort_order");
+  if (error) {
+    console.error("getTestimonials:", error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function getFaqs(placement: FaqPlacement): Promise<Faq[]> {
+  if (!supabaseConfigured()) return [];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("faqs")
+    .select("*")
+    .eq("placement", placement)
+    .eq("is_active", true)
+    .order("sort_order");
+  if (error) {
+    console.error("getFaqs:", error.message);
+    return [];
+  }
+  return data ?? [];
 }

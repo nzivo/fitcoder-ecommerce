@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { uploadImages, getFiles } from "@/lib/actions/upload";
 
 function slugify(input: string) {
   return input
@@ -19,10 +20,13 @@ function csvToArray(value: FormDataEntryValue | null) {
     .filter(Boolean);
 }
 
-function productPayload(formData: FormData) {
+async function productPayload(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
   const categoryId = String(formData.get("category_id") ?? "").trim();
+
+  const existingImages = csvToArray(formData.get("images_existing"));
+  const newImages = await uploadImages(getFiles(formData, "images_new"), "products");
 
   return {
     name,
@@ -33,7 +37,7 @@ function productPayload(formData: FormData) {
       ? Number(formData.get("compare_at_price"))
       : null,
     category_id: categoryId || null,
-    images: csvToArray(formData.get("images")),
+    images: [...existingImages, ...newImages],
     sizes: csvToArray(formData.get("sizes")),
     colors: csvToArray(formData.get("colors")),
     stock: Number(formData.get("stock") ?? 0),
@@ -44,7 +48,13 @@ function productPayload(formData: FormData) {
 
 export async function createProduct(formData: FormData) {
   const supabase = await createClient();
-  const payload = productPayload(formData);
+
+  let payload;
+  try {
+    payload = await productPayload(formData);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Upload failed" };
+  }
 
   const { error } = await supabase.from("products").insert(payload);
   if (error) return { error: error.message };
@@ -57,7 +67,13 @@ export async function createProduct(formData: FormData) {
 
 export async function updateProduct(productId: string, formData: FormData) {
   const supabase = await createClient();
-  const payload = productPayload(formData);
+
+  let payload;
+  try {
+    payload = await productPayload(formData);
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "Upload failed" };
+  }
 
   const { error } = await supabase.from("products").update(payload).eq("id", productId);
   if (error) return { error: error.message };

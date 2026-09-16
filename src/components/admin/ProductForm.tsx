@@ -3,6 +3,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Category, Product } from "@/types/database";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 type ActionResult = { error: string | null } | undefined | void;
 
@@ -64,12 +65,8 @@ export default function ProductForm({
         </label>
       </div>
 
-      <Field
-        label="Image URLs (comma-separated)"
-        name="images"
-        defaultValue={product?.images.join(", ")}
-        placeholder="/products/placeholder-1.svg, https://..."
-      />
+      <ImageUploadField name="images" label="Product Images" defaultImages={product?.images ?? []} />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Sizes (comma-separated)" name="sizes" defaultValue={product?.sizes.join(", ")} placeholder="S, M, L, XL" />
         <Field label="Colors (comma-separated)" name="colors" defaultValue={product?.colors.join(", ")} placeholder="Black, Grey" />

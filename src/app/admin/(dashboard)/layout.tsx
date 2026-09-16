@@ -1,5 +1,14 @@
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingCart, ExternalLink } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  ExternalLink,
+  Tag,
+  LayoutTemplate,
+  Star,
+  HelpCircle,
+} from "lucide-react";
 import SignOutButton from "@/components/SignOutButton";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 import { createClient } from "@/lib/supabase/server";
@@ -8,6 +17,10 @@ const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { href: "/admin/products", label: "Products", icon: Package },
+  { href: "/admin/categories", label: "Categories", icon: Tag },
+  { href: "/admin/content", label: "Homepage Content", icon: LayoutTemplate },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Star },
+  { href: "/admin/faqs", label: "FAQs", icon: HelpCircle },
 ];
 
 export default async function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
