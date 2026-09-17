@@ -58,6 +58,27 @@ export async function getProducts(
   return (data ?? []) as unknown as Product[];
 }
 
+export async function getWishlistProducts(): Promise<Product[]> {
+  if (!supabaseConfigured()) return [];
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from("wishlist_items")
+    .select("created_at, products(*)")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("getWishlistProducts:", error.message);
+    return [];
+  }
+  const rows = (data ?? []) as unknown as { products: Product | null }[];
+  return rows.map((row) => row.products).filter((product): product is Product => product != null);
+}
+
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   if (!supabaseConfigured()) return null;
   const supabase = await createClient();

@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Heart } from "lucide-react";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Product } from "@/types/database";
 import { formatMoney } from "@/lib/format";
 import { useCartStore } from "@/lib/cart-store";
+import WishlistButton from "@/components/WishlistButton";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const [liked, setLiked] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const image = product.images[0] ?? null;
   const onSale = product.compare_at_price != null && product.compare_at_price > product.price;
@@ -48,13 +46,11 @@ export default function ProductCard({ product }: { product: Product }) {
             Sale
           </span>
         )}
-        <button
-          aria-label="Save to wishlist"
-          onClick={() => setLiked((v) => !v)}
-          className="absolute top-3 right-3 bg-background/80 rounded-full p-1.5"
-        >
-          <Heart size={15} fill={liked ? "currentColor" : "none"} />
-        </button>
+        <WishlistButton
+          productId={product.id}
+          redirectTo={`/product/${product.slug}`}
+          className="absolute top-3 right-3 bg-background/80 rounded-full p-1.5 disabled:opacity-50"
+        />
       </div>
 
       <div className="pt-3 space-y-1">

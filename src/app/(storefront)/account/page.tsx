@@ -1,9 +1,15 @@
+import Link from "next/link";
 import AuthForm from "@/components/AuthForm";
 import SignOutButton from "@/components/SignOutButton";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate, formatMoney } from "@/lib/format";
 
-export default async function AccountPage() {
+export default async function AccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirectedFrom?: string }>;
+}) {
+  const { redirectedFrom } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -13,7 +19,7 @@ export default async function AccountPage() {
     return (
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-16">
         <h1 className="font-display text-2xl uppercase text-center mb-10">Account</h1>
-        <AuthForm />
+        <AuthForm redirectTo={redirectedFrom ?? "/account"} />
       </div>
     );
   }
@@ -30,7 +36,12 @@ export default async function AccountPage() {
           <h1 className="font-display text-2xl uppercase">My Orders</h1>
           <p className="text-sm text-muted mt-1">{user.email}</p>
         </div>
-        <SignOutButton />
+        <div className="flex items-center gap-4">
+          <Link href="/account/wishlist" className="text-xs underline">
+            Wishlist
+          </Link>
+          <SignOutButton />
+        </div>
       </div>
 
       {!orders || orders.length === 0 ? (

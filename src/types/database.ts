@@ -122,6 +122,13 @@ export type OrderItem = {
   color: string | null;
 };
 
+export type WishlistItem = {
+  id: string;
+  user_id: string;
+  product_id: string;
+  created_at: string;
+};
+
 type TableDef<Row, InsertDefaults extends keyof Row = never> = {
   Row: Row;
   Insert: Partial<Pick<Row, InsertDefaults>> & Omit<Row, InsertDefaults>;
@@ -167,6 +174,7 @@ export type Database = {
         | "paystack_reference"
       >;
       order_items: TableDef<OrderItem, "id" | "product_id" | "product_image" | "size" | "color">;
+      wishlist_items: TableDef<WishlistItem, "id" | "created_at">;
     };
     Views: Record<string, never>;
     Functions: {

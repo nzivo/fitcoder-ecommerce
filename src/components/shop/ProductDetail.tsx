@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import type { Product } from "@/types/database";
 import { formatMoney } from "@/lib/format";
 import { useCartStore } from "@/lib/cart-store";
+import WishlistButton from "@/components/WishlistButton";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(0);
@@ -125,13 +126,21 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </div>
 
-        <button
-          onClick={handleAddToBag}
-          disabled={product.stock <= 0}
-          className="w-full bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase disabled:opacity-40"
-        >
-          {product.stock > 0 ? "Add to Bag" : "Sold Out"}
-        </button>
+        <div className="flex items-stretch gap-2">
+          <button
+            onClick={handleAddToBag}
+            disabled={product.stock <= 0}
+            className="flex-1 bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase disabled:opacity-40"
+          >
+            {product.stock > 0 ? "Add to Bag" : "Sold Out"}
+          </button>
+          <WishlistButton
+            productId={product.id}
+            redirectTo={`/product/${product.slug}`}
+            size={18}
+            className="shrink-0 w-12 flex items-center justify-center border border-border hover:border-foreground transition-colors disabled:opacity-50"
+          />
+        </div>
 
         <p className="text-xs text-muted mt-4">
           {product.stock > 0 ? `${product.stock} in stock` : "Currently unavailable"}
