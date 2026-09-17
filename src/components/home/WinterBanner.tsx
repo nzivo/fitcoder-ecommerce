@@ -24,7 +24,7 @@ export default function WinterBanner({ section }: { section: SiteSection | null 
         <h2 className="font-display text-3xl sm:text-5xl uppercase text-white mb-5">{content.title}</h2>
         <Link
           href={content.cta_href}
-          className="inline-block bg-white text-black px-6 py-3 text-xs tracking-widest-xl uppercase"
+          className="inline-block bg-accent text-accent-foreground px-6 py-3 text-xs tracking-widest-xl uppercase"
         >
           {content.cta_label}
         </Link>

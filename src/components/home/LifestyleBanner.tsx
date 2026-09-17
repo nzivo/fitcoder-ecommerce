@@ -24,7 +24,7 @@ export default function LifestyleBanner({ section }: { section: SiteSection | nu
         <p className="text-sm text-white/70 mb-6">{content.subtitle}</p>
         <Link
           href={content.cta_href}
-          className="inline-block bg-white text-black px-7 py-3 text-xs tracking-widest-xl uppercase"
+          className="inline-block bg-accent text-accent-foreground px-7 py-3 text-xs tracking-widest-xl uppercase"
         >
           {content.cta_label}
         </Link>

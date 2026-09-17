@@ -120,7 +120,7 @@ export default function CheckoutPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full bg-foreground text-background py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
+          className="w-full bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
         >
           {submitting ? "Redirecting to Paystack…" : `Pay ${formatMoney(total)}`}
         </button>

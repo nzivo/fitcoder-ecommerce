@@ -12,7 +12,7 @@ export default async function AdminCategoriesPage() {
         <h1 className="font-display text-2xl uppercase">Categories</h1>
         <Link
           href="/admin/categories/new"
-          className="bg-foreground text-background px-5 py-2.5 text-xs tracking-widest-xl uppercase"
+          className="bg-accent text-accent-foreground px-5 py-2.5 text-xs tracking-widest-xl uppercase"
         >
           Add Category
         </Link>

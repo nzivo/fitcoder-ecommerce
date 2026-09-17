@@ -15,7 +15,7 @@ export default async function AdminTestimonialsPage() {
         <h1 className="font-display text-2xl uppercase">Testimonials</h1>
         <Link
           href="/admin/testimonials/new"
-          className="bg-foreground text-background px-5 py-2.5 text-xs tracking-widest-xl uppercase"
+          className="bg-accent text-accent-foreground px-5 py-2.5 text-xs tracking-widest-xl uppercase"
         >
           Add Testimonial
         </Link>

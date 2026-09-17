@@ -83,7 +83,7 @@ function FilterPill({ href, active, label }: { href: string; active: boolean; la
     <Link
       href={href}
       className={`text-xs uppercase tracking-widest-xl px-3 py-1.5 border ${
-        active ? "bg-foreground text-background border-foreground" : "border-border text-muted"
+        active ? "bg-accent text-accent-foreground border-accent" : "border-border text-muted"
       }`}
     >
       {label}

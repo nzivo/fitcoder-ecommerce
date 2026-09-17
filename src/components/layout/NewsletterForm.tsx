@@ -22,7 +22,7 @@ export default function NewsletterForm() {
         placeholder="Email address"
         className="flex-1 bg-surface border border-border px-3 py-2 text-sm focus:outline-none focus:border-foreground"
       />
-      <button className="bg-foreground text-background px-4 py-2 text-xs tracking-widest-xl uppercase">
+      <button className="bg-accent text-accent-foreground px-4 py-2 text-xs tracking-widest-xl uppercase">
         Join
       </button>
     </form>

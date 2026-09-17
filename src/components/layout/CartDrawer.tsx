@@ -98,7 +98,7 @@ export default function CartDrawer() {
               <Link
                 href="/checkout"
                 onClick={close}
-                className="block text-center bg-foreground text-background py-3 text-xs tracking-widest-xl uppercase"
+                className="block text-center bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase"
               >
                 Checkout
               </Link>

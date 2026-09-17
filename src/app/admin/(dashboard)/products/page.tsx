@@ -16,7 +16,7 @@ export default async function AdminProductsPage() {
         <h1 className="font-display text-2xl uppercase">Products</h1>
         <Link
           href="/admin/products/new"
-          className="bg-foreground text-background px-5 py-2.5 text-xs tracking-widest-xl uppercase"
+          className="bg-accent text-accent-foreground px-5 py-2.5 text-xs tracking-widest-xl uppercase"
         >
           Add Product
         </Link>

@@ -72,7 +72,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <button
           onClick={quickAdd}
           disabled={product.stock <= 0}
-          className="mt-2 w-full border border-foreground py-2 text-[11px] tracking-widest-xl uppercase hover:bg-foreground hover:text-background transition-colors disabled:opacity-40 disabled:pointer-events-none"
+          className="mt-2 w-full border border-foreground py-2 text-[11px] tracking-widest-xl uppercase hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors disabled:opacity-40 disabled:pointer-events-none"
         >
           {product.stock > 0 ? "Add to Bag" : "Sold Out"}
         </button>

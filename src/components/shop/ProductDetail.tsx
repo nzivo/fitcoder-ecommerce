@@ -83,7 +83,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   key={s}
                   onClick={() => setSize(s)}
                   className={`w-11 h-11 text-xs border ${
-                    size === s ? "bg-foreground text-background border-foreground" : "border-border"
+                    size === s ? "bg-accent text-accent-foreground border-accent" : "border-border"
                   }`}
                 >
                   {s}
@@ -102,7 +102,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   key={c}
                   onClick={() => setColor(c)}
                   className={`px-4 h-11 text-xs border ${
-                    color === c ? "bg-foreground text-background border-foreground" : "border-border"
+                    color === c ? "bg-accent text-accent-foreground border-accent" : "border-border"
                   }`}
                 >
                   {c}
@@ -128,7 +128,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         <button
           onClick={handleAddToBag}
           disabled={product.stock <= 0}
-          className="w-full bg-foreground text-background py-3 text-xs tracking-widest-xl uppercase disabled:opacity-40"
+          className="w-full bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase disabled:opacity-40"
         >
           {product.stock > 0 ? "Add to Bag" : "Sold Out"}
         </button>

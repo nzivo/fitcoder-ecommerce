@@ -24,7 +24,7 @@ export default async function AdminFaqsPage({
         <h1 className="font-display text-2xl uppercase">FAQs</h1>
         <Link
           href="/admin/faqs/new"
-          className="bg-foreground text-background px-5 py-2.5 text-xs tracking-widest-xl uppercase"
+          className="bg-accent text-accent-foreground px-5 py-2.5 text-xs tracking-widest-xl uppercase"
         >
           Add FAQ
         </Link>
@@ -71,7 +71,7 @@ function Tab({ href, active, label }: { href: string; active: boolean; label: st
     <Link
       href={href}
       className={`text-xs uppercase tracking-widest-xl px-3 py-1.5 border ${
-        active ? "bg-foreground text-background border-foreground" : "border-border text-muted"
+        active ? "bg-accent text-accent-foreground border-accent" : "border-border text-muted"
       }`}
     >
       {label}
