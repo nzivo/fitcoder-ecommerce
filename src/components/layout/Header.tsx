@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useCartStore, cartCount } from "@/lib/cart-store";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 import Logo from "@/components/layout/Logo";
+import SearchOverlay from "@/components/layout/SearchOverlay";
 
 const NAV_LINKS = [
   { href: "/shop", label: "Shop All" },
@@ -17,6 +18,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const items = useCartStore((s) => s.items);
   const openCart = useCartStore((s) => s.open);
   const count = cartCount(items);
@@ -61,8 +63,12 @@ export default function Header() {
 
           <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <button aria-label="Search" className="p-1 hover:text-muted transition-colors">
-              <Search size={19} />
+            <button
+              aria-label="Search"
+              onClick={() => setSearchOpen((v) => !v)}
+              className="p-1 hover:text-muted transition-colors"
+            >
+              {searchOpen ? <X size={19} /> : <Search size={19} />}
             </button>
             <Link href="/account" aria-label="Account" className="p-1 hover:text-muted transition-colors">
               <User size={19} />
@@ -82,6 +88,8 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
 
       {menuOpen && (
         <nav className="md:hidden flex flex-col gap-1 px-4 pb-4 text-sm tracking-widest-xl uppercase border-t border-border pt-4">

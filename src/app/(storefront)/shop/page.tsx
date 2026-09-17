@@ -24,11 +24,11 @@ function sortProducts(products: Product[], sort: string | undefined) {
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; sort?: string }>;
+  searchParams: Promise<{ category?: string; sort?: string; search?: string }>;
 }) {
-  const { category, sort } = await searchParams;
+  const { category, sort, search } = await searchParams;
   const [rawProducts, faqs] = await Promise.all([
-    getProducts({ categorySlug: category }),
+    getProducts({ categorySlug: category, search }),
     getFaqs("shop"),
   ]);
   const products = sortProducts(rawProducts, sort);
@@ -36,7 +36,9 @@ export default async function ShopPage({
   return (
     <div>
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 pt-10 pb-6 text-center">
-        <h1 className="font-display text-2xl sm:text-3xl uppercase">Shop All</h1>
+        <h1 className="font-display text-2xl sm:text-3xl uppercase">
+          {search ? `Results for "${search}"` : "Shop All"}
+        </h1>
       </div>
 
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center justify-between pb-6">
@@ -47,7 +49,9 @@ export default async function ShopPage({
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 pb-16">
         {products.length === 0 ? (
           <div className="border border-dashed border-border py-20 text-center text-sm text-muted">
-            No products found. Add products from the admin dashboard to see them here.
+            {search
+              ? `No products matched "${search}".`
+              : "No products found. Add products from the admin dashboard to see them here."}
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">

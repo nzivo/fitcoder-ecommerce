@@ -33,13 +33,21 @@ export async function getFeaturedProducts(limit = 4): Promise<Product[]> {
   return data ?? [];
 }
 
-export async function getProducts(options: { categorySlug?: string } = {}): Promise<Product[]> {
+export async function getProducts(
+  options: { categorySlug?: string; search?: string } = {},
+): Promise<Product[]> {
   if (!supabaseConfigured()) return [];
   const supabase = await createClient();
   let query = supabase.from("products").select("*, categories!inner(slug)").eq("is_active", true);
 
   if (options.categorySlug) {
     query = query.eq("categories.slug", options.categorySlug);
+  }
+
+  const term = options.search?.trim();
+  if (term) {
+    const safe = term.replace(/[,()]/g, "");
+    query = query.or(`name.ilike.%${safe}%,description.ilike.%${safe}%`);
   }
 
   const { data, error } = await query.order("created_at", { ascending: false });
