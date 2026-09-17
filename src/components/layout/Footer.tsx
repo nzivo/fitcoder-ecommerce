@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SocialIcons from "@/components/layout/SocialIcons";
 import NewsletterForm from "@/components/layout/NewsletterForm";
 
@@ -7,7 +8,14 @@ export default function Footer() {
     <footer className="bg-background border-t border-border">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
-          <p className="font-display text-lg tracking-[0.15em] uppercase mb-3">Fit Coder</p>
+          <Image
+            src="/logo.svg"
+            alt="Fit Coder"
+            width={1000}
+            height={200}
+            unoptimized
+            className="h-6 w-auto mb-3"
+          />
           <p className="text-sm text-muted max-w-xs">
             Fit Coder isn&apos;t just a clothing brand. It&apos;s your statement to the world.
           </p>

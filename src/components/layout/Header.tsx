@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Search, User, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { useCartStore, cartCount } from "@/lib/cart-store";
@@ -45,11 +46,16 @@ export default function Header() {
           </nav>
         </div>
 
-        <Link
-          href="/"
-          className="font-display text-base sm:text-2xl tracking-[0.08em] sm:tracking-[0.15em] uppercase justify-self-center whitespace-nowrap"
-        >
-          Fit Coder
+        <Link href="/" aria-label="Fit Coder" className="justify-self-center">
+          <Image
+            src="/logo.svg"
+            alt="Fit Coder"
+            width={1000}
+            height={200}
+            unoptimized
+            priority
+            className="h-6 sm:h-8 w-auto"
+          />
         </Link>
 
         <div className="flex items-center gap-6 min-w-0 justify-end">
