@@ -129,6 +129,16 @@ export type WishlistItem = {
   created_at: string;
 };
 
+export type ProductVariant = {
+  id: string;
+  product_id: string;
+  size: string;
+  color: string;
+  stock: number;
+  created_at: string;
+  updated_at: string;
+};
+
 type TableDef<Row, InsertDefaults extends keyof Row = never> = {
   Row: Row;
   Insert: Partial<Pick<Row, InsertDefaults>> & Omit<Row, InsertDefaults>;
@@ -175,11 +185,16 @@ export type Database = {
       >;
       order_items: TableDef<OrderItem, "id" | "product_id" | "product_image" | "size" | "color">;
       wishlist_items: TableDef<WishlistItem, "id" | "created_at">;
+      product_variants: TableDef<ProductVariant, "id" | "created_at" | "updated_at" | "stock">;
     };
     Views: Record<string, never>;
     Functions: {
       decrement_stock: {
         Args: { p_product_id: string; p_quantity: number };
+        Returns: void;
+      };
+      decrement_variant_stock: {
+        Args: { p_product_id: string; p_size: string; p_color: string; p_quantity: number };
         Returns: void;
       };
       is_admin: {

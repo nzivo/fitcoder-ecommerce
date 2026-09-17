@@ -2,12 +2,18 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
-import type { Product } from "@/types/database";
+import type { Product, ProductVariant } from "@/types/database";
 import { formatMoney } from "@/lib/format";
 import { useCartStore } from "@/lib/cart-store";
 import WishlistButton from "@/components/WishlistButton";
 
-export default function ProductDetail({ product }: { product: Product }) {
+export default function ProductDetail({
+  product,
+  variants,
+}: {
+  product: Product;
+  variants: ProductVariant[];
+}) {
   const [activeImage, setActiveImage] = useState(0);
   const [size, setSize] = useState(product.sizes[0] ?? null);
   const [color, setColor] = useState(product.colors[0] ?? null);
@@ -17,6 +23,15 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const onSale = product.compare_at_price != null && product.compare_at_price > product.price;
   const images = product.images.length > 0 ? product.images : [null];
+
+  // Products with variant rows are tracked per size/color; products without
+  // any (e.g. no sizes or colors) fall back to the product's own stock count.
+  const trackingVariants = variants.length > 0;
+  const selectedVariant = variants.find(
+    (v) => v.size === (size ?? "") && v.color === (color ?? ""),
+  );
+  const availableStock = trackingVariants ? (selectedVariant?.stock ?? 0) : product.stock;
+  const inStock = availableStock > 0;
 
   function handleAddToBag() {
     addItem({
@@ -120,7 +135,11 @@ export default function ProductDetail({ product }: { product: Product }) {
               −
             </button>
             <span className="px-4 text-sm">{quantity}</span>
-            <button className="px-3 py-2" onClick={() => setQuantity((q) => q + 1)}>
+            <button
+              className="px-3 py-2 disabled:opacity-40"
+              disabled={quantity >= availableStock}
+              onClick={() => setQuantity((q) => Math.min(availableStock, q + 1))}
+            >
               +
             </button>
           </div>
@@ -129,10 +148,10 @@ export default function ProductDetail({ product }: { product: Product }) {
         <div className="flex items-stretch gap-2">
           <button
             onClick={handleAddToBag}
-            disabled={product.stock <= 0}
+            disabled={!inStock}
             className="flex-1 bg-accent text-accent-foreground py-3 text-xs tracking-widest-xl uppercase disabled:opacity-40"
           >
-            {product.stock > 0 ? "Add to Bag" : "Sold Out"}
+            {inStock ? "Add to Bag" : "Sold Out"}
           </button>
           <WishlistButton
             productId={product.id}
@@ -143,7 +162,11 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         <p className="text-xs text-muted mt-4">
-          {product.stock > 0 ? `${product.stock} in stock` : "Currently unavailable"}
+          {inStock
+            ? `${availableStock} in stock${trackingVariants ? " for this size/color" : ""}`
+            : trackingVariants
+              ? "Sold out in this size/color"
+              : "Currently unavailable"}
         </p>
       </div>
     </div>

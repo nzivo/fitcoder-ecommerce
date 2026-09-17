@@ -42,13 +42,15 @@ export async function POST(request: Request) {
 
       const { data: items } = await admin
         .from("order_items")
-        .select("product_id, quantity")
+        .select("product_id, quantity, size, color")
         .eq("order_id", order.id);
 
       for (const item of items ?? []) {
         if (!item.product_id) continue;
-        await admin.rpc("decrement_stock", {
+        await admin.rpc("decrement_variant_stock", {
           p_product_id: item.product_id,
+          p_size: item.size ?? "",
+          p_color: item.color ?? "",
           p_quantity: item.quantity,
         });
       }

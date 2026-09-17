@@ -1,5 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
-import type { Category, Faq, FaqPlacement, Product, SiteSection, SiteSectionId, Testimonial } from "@/types/database";
+import type {
+  Category,
+  Faq,
+  FaqPlacement,
+  Product,
+  ProductVariant,
+  SiteSection,
+  SiteSectionId,
+  Testimonial,
+} from "@/types/database";
 
 function supabaseConfigured() {
   return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -90,6 +99,20 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .single();
   if (error) return null;
   return data;
+}
+
+export async function getProductVariants(productId: string): Promise<ProductVariant[]> {
+  if (!supabaseConfigured()) return [];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("product_variants")
+    .select("*")
+    .eq("product_id", productId);
+  if (error) {
+    console.error("getProductVariants:", error.message);
+    return [];
+  }
+  return data ?? [];
 }
 
 export async function getSiteSection(id: SiteSectionId): Promise<SiteSection | null> {

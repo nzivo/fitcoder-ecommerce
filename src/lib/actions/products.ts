@@ -20,6 +20,33 @@ function csvToArray(value: FormDataEntryValue | null) {
     .filter(Boolean);
 }
 
+function parseVariantStock(formData: FormData) {
+  const variants: { size: string; color: string; stock: number }[] = [];
+  for (const [key, value] of formData.entries()) {
+    if (!key.startsWith("variant|")) continue;
+    const [, encodedSize, encodedColor] = key.split("|");
+    variants.push({
+      size: decodeURIComponent(encodedSize ?? ""),
+      color: decodeURIComponent(encodedColor ?? ""),
+      stock: Math.max(0, Math.floor(Number(value) || 0)),
+    });
+  }
+  return variants;
+}
+
+async function saveVariantStock(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  productId: string,
+  formData: FormData,
+) {
+  const variants = parseVariantStock(formData);
+  await supabase.from("product_variants").delete().eq("product_id", productId);
+  if (variants.length === 0) return;
+  await supabase
+    .from("product_variants")
+    .insert(variants.map((v) => ({ ...v, product_id: productId })));
+}
+
 async function productPayload(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
@@ -40,7 +67,6 @@ async function productPayload(formData: FormData) {
     images: [...existingImages, ...newImages],
     sizes: csvToArray(formData.get("sizes")),
     colors: csvToArray(formData.get("colors")),
-    stock: Number(formData.get("stock") ?? 0),
     is_active: formData.get("is_active") === "on",
     is_featured: formData.get("is_featured") === "on",
   };
@@ -56,8 +82,14 @@ export async function createProduct(formData: FormData) {
     return { error: err instanceof Error ? err.message : "Upload failed" };
   }
 
-  const { error } = await supabase.from("products").insert(payload);
+  const { data: created, error } = await supabase
+    .from("products")
+    .insert(payload)
+    .select("id")
+    .single();
   if (error) return { error: error.message };
+
+  await saveVariantStock(supabase, created.id, formData);
 
   revalidatePath("/admin/products");
   revalidatePath("/shop");
@@ -77,6 +109,8 @@ export async function updateProduct(productId: string, formData: FormData) {
 
   const { error } = await supabase.from("products").update(payload).eq("id", productId);
   if (error) return { error: error.message };
+
+  await saveVariantStock(supabase, productId, formData);
 
   revalidatePath("/admin/products");
   revalidatePath("/shop");

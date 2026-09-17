@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductDetail from "@/components/shop/ProductDetail";
-import { getProductBySlug } from "@/lib/data";
+import { getProductBySlug, getProductVariants } from "@/lib/data";
 
 export default async function ProductPage({
   params,
@@ -12,5 +12,7 @@ export default async function ProductPage({
 
   if (!product) notFound();
 
-  return <ProductDetail product={product} />;
+  const variants = await getProductVariants(product.id);
+
+  return <ProductDetail product={product} variants={variants} />;
 }

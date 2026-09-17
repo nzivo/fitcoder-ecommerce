@@ -1,23 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import type { Category, Product } from "@/types/database";
+import type { Category, Product, ProductVariant } from "@/types/database";
 import ImageUploadField from "@/components/admin/ImageUploadField";
 import SubmitButton from "@/components/admin/SubmitButton";
 
 type ActionResult = { error: string | null } | undefined | void;
 
+function csvToList(value: string) {
+  return value
+    .split(",")
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
 export default function ProductForm({
   categories,
   product,
+  variants = [],
   action,
 }: {
   categories: Category[];
   product?: Product;
+  variants?: ProductVariant[];
   action: (formData: FormData) => Promise<ActionResult>;
 }) {
   const [submitting, setSubmitting] = useState(false);
+  const [sizesInput, setSizesInput] = useState(product?.sizes.join(", ") ?? "");
+  const [colorsInput, setColorsInput] = useState(product?.colors.join(", ") ?? "");
+
+  const variantCombos = useMemo(() => {
+    const sizes = csvToList(sizesInput);
+    const colors = csvToList(colorsInput);
+    const pairs: { size: string; color: string }[] =
+      sizes.length === 0 && colors.length === 0
+        ? [{ size: "", color: "" }]
+        : sizes.length === 0
+          ? colors.map((color) => ({ size: "", color }))
+          : colors.length === 0
+            ? sizes.map((size) => ({ size, color: "" }))
+            : sizes.flatMap((size) => colors.map((color) => ({ size, color })));
+
+    return pairs.map((pair) => {
+      const existing = variants.find((v) => v.size === pair.size && v.color === pair.color);
+      return { ...pair, stock: existing?.stock ?? 0 };
+    });
+  }, [sizesInput, colorsInput, variants]);
 
   async function handleSubmit(formData: FormData) {
     setSubmitting(true);
@@ -39,7 +68,7 @@ export default function ProductForm({
 
       <TextArea label="Description" name="description" defaultValue={product?.description ?? ""} />
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <Field label="Price (KES)" name="price" type="number" step="0.01" defaultValue={product?.price} required />
         <Field
           label="Compare-at price"
@@ -48,7 +77,6 @@ export default function ProductForm({
           step="0.01"
           defaultValue={product?.compare_at_price ?? ""}
         />
-        <Field label="Stock" name="stock" type="number" defaultValue={product?.stock ?? 0} required />
         <label className="block text-xs">
           <span className="text-muted">Category</span>
           <select
@@ -69,8 +97,51 @@ export default function ProductForm({
       <ImageUploadField name="images" label="Product Images" defaultImages={product?.images ?? []} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Sizes (comma-separated)" name="sizes" defaultValue={product?.sizes.join(", ")} placeholder="S, M, L, XL" />
-        <Field label="Colors (comma-separated)" name="colors" defaultValue={product?.colors.join(", ")} placeholder="Black, Grey" />
+        <Field
+          label="Sizes (comma-separated)"
+          name="sizes"
+          value={sizesInput}
+          onChange={setSizesInput}
+          placeholder="S, M, L, XL"
+        />
+        <Field
+          label="Colors (comma-separated)"
+          name="colors"
+          value={colorsInput}
+          onChange={setColorsInput}
+          placeholder="Black, Grey"
+        />
+      </div>
+
+      <div>
+        <p className="text-xs text-muted mb-2">
+          Stock by {csvToList(sizesInput).length > 0 && csvToList(colorsInput).length > 0
+            ? "size & color"
+            : csvToList(sizesInput).length > 0
+              ? "size"
+              : csvToList(colorsInput).length > 0
+                ? "color"
+                : "variant"}
+        </p>
+        <div className="border border-border divide-y divide-border max-w-md">
+          {variantCombos.map(({ size, color, stock }) => (
+            <div
+              key={`${size}|${color}`}
+              className="flex items-center justify-between gap-4 px-3 py-2"
+            >
+              <span className="text-sm">
+                {[size, color].filter(Boolean).join(" / ") || "Total stock"}
+              </span>
+              <input
+                type="number"
+                min={0}
+                name={`variant|${encodeURIComponent(size)}|${encodeURIComponent(color)}`}
+                defaultValue={stock}
+                className="w-24 bg-surface border border-border px-3 py-1.5 text-sm text-right focus:outline-none focus:border-foreground"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex items-center gap-8">
@@ -93,6 +164,8 @@ function Field({
   label,
   name,
   defaultValue,
+  value,
+  onChange,
   type = "text",
   step,
   required,
@@ -101,6 +174,8 @@ function Field({
   label: string;
   name: string;
   defaultValue?: string | number | null;
+  value?: string;
+  onChange?: (value: string) => void;
   type?: string;
   step?: string;
   required?: boolean;
@@ -115,7 +190,9 @@ function Field({
         step={step}
         required={required}
         placeholder={placeholder}
-        defaultValue={defaultValue ?? ""}
+        {...(value !== undefined
+          ? { value, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChange?.(e.target.value) }
+          : { defaultValue: defaultValue ?? "" })}
         className="mt-1 w-full bg-surface border border-border px-3 py-2 text-sm focus:outline-none focus:border-foreground"
       />
     </label>
