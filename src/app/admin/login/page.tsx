@@ -16,7 +16,7 @@ export default async function AdminLoginPage({
           That account doesn&apos;t have admin access.
         </p>
       )}
-      <AuthForm redirectTo="/admin" />
+      <AuthForm redirectTo="/admin" allowSignup={false} />
     </div>
   );
 }
