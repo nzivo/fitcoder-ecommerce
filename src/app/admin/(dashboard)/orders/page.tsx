@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { formatDate, formatMoney } from "@/lib/format";
-import StatusPill from "@/components/admin/StatusPill";
-import type { OrderStatus } from "@/types/database";
+import OrdersTable from "@/components/admin/OrdersTable";
+import type { OrderItem, OrderStatus } from "@/types/database";
 
 const STATUSES: OrderStatus[] = [
   "pending",
@@ -29,6 +28,18 @@ export default async function AdminOrdersPage({
   if (status && isValidStatus(status)) query = query.eq("status", status);
   const { data: orders } = await query;
 
+  const orderIds = (orders ?? []).map((o) => o.id);
+  const itemsByOrder: Record<string, OrderItem[]> = {};
+  if (orderIds.length > 0) {
+    const { data: items } = await supabase
+      .from("order_items")
+      .select("*")
+      .in("order_id", orderIds);
+    for (const item of items ?? []) {
+      (itemsByOrder[item.order_id] ??= []).push(item);
+    }
+  }
+
   return (
     <div>
       <h1 className="font-display text-2xl uppercase mb-6">Orders</h1>
@@ -43,36 +54,7 @@ export default async function AdminOrdersPage({
       {!orders || orders.length === 0 ? (
         <p className="text-sm text-muted">No orders found.</p>
       ) : (
-        <div className="border border-border overflow-x-auto">
-          <table className="w-full text-sm min-w-[640px]">
-            <thead>
-              <tr className="border-b border-border text-left text-xs uppercase tracking-widest-xl text-muted">
-                <th className="px-4 py-3">Reference</th>
-                <th className="px-4 py-3">Customer</th>
-                <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Total</th>
-                <th className="px-4 py-3">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-surface">
-                  <td className="px-4 py-3">
-                    <Link href={`/admin/orders/${order.id}`} className="underline">
-                      {order.paystack_reference}
-                    </Link>
-                  </td>
-                  <td className="px-4 py-3">{order.email}</td>
-                  <td className="px-4 py-3 text-muted">{formatDate(order.created_at)}</td>
-                  <td className="px-4 py-3">{formatMoney(order.total, order.currency)}</td>
-                  <td className="px-4 py-3">
-                    <StatusPill status={order.status} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <OrdersTable orders={orders} itemsByOrder={itemsByOrder} />
       )}
     </div>
   );
