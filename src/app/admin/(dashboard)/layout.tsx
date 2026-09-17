@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/layout/Logo";
 import {
   LayoutDashboard,
   Package,
@@ -34,15 +34,8 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
     <div className="min-h-[calc(100vh-1px)] grid grid-cols-1 md:grid-cols-[220px_1fr] bg-background">
       <aside className="border-r border-border md:min-h-screen p-6 flex flex-col">
         <div className="flex items-start justify-between mb-8">
-          <Link href="/admin">
-            <Image
-              src="/logo.svg"
-              alt="Fit Coder"
-              width={1000}
-              height={200}
-              unoptimized
-              className="h-6 w-auto"
-            />
+          <Link href="/admin" aria-label="Fit Coder">
+            <Logo className="h-6 aspect-[5/1]" />
             <span className="block text-[10px] text-muted tracking-widest-xl mt-1">Admin</span>
           </Link>
           <ThemeToggle />

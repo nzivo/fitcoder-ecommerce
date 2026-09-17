@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, Search, User, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { useCartStore, cartCount } from "@/lib/cart-store";
 import ThemeToggle from "@/components/layout/ThemeToggle";
+import Logo from "@/components/layout/Logo";
 
 const NAV_LINKS = [
   { href: "/shop", label: "Shop All" },
@@ -47,15 +47,7 @@ export default function Header() {
         </div>
 
         <Link href="/" aria-label="Fit Coder" className="justify-self-center">
-          <Image
-            src="/logo.svg"
-            alt="Fit Coder"
-            width={1000}
-            height={200}
-            unoptimized
-            priority
-            className="h-6 sm:h-8 w-auto"
-          />
+          <Logo className="h-6 sm:h-8 aspect-[5/1]" />
         </Link>
 
         <div className="flex items-center gap-6 min-w-0 justify-end">
