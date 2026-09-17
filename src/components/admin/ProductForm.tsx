@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Category, Product } from "@/types/database";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import SubmitButton from "@/components/admin/SubmitButton";
 
 type ActionResult = { error: string | null } | undefined | void;
 
@@ -83,13 +84,7 @@ export default function ProductForm({
         </label>
       </div>
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-foreground text-background px-6 py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
-      >
-        {submitting ? "Saving…" : product ? "Save Changes" : "Create Product"}
-      </button>
+      <SubmitButton submitting={submitting} label={product ? "Save Changes" : "Create Product"} />
     </form>
   );
 }

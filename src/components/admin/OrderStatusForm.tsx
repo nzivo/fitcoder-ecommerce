@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 import { updateOrderStatus } from "@/lib/actions/orders";
 import type { OrderStatus } from "@/types/database";
 
@@ -27,17 +28,20 @@ export default function OrderStatusForm({ orderId, status }: { orderId: string; 
   }
 
   return (
-    <select
-      defaultValue={status}
-      disabled={isPending}
-      onChange={(e) => handleChange(e.target.value)}
-      className="bg-surface border border-border px-3 py-2 text-xs uppercase tracking-widest-xl focus:outline-none focus:border-foreground disabled:opacity-50"
-    >
-      {STATUSES.map((s) => (
-        <option key={s} value={s}>
-          {s}
-        </option>
-      ))}
-    </select>
+    <div className="inline-flex items-center gap-2">
+      <select
+        defaultValue={status}
+        disabled={isPending}
+        onChange={(e) => handleChange(e.target.value)}
+        className="bg-surface border border-border px-3 py-2 text-xs uppercase tracking-widest-xl focus:outline-none focus:border-foreground disabled:opacity-50"
+      >
+        {STATUSES.map((s) => (
+          <option key={s} value={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+      {isPending && <Loader2 size={14} className="animate-spin text-muted" />}
+    </div>
   );
 }

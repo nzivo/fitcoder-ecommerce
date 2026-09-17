@@ -3,6 +3,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Faq } from "@/types/database";
+import SubmitButton from "@/components/admin/SubmitButton";
 
 type ActionResult = { error: string | null } | undefined | void;
 
@@ -72,13 +73,7 @@ export default function FaqForm({
         Active (visible on site)
       </label>
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-foreground text-background px-6 py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
-      >
-        {submitting ? "Saving…" : faq ? "Save Changes" : "Create FAQ"}
-      </button>
+      <SubmitButton submitting={submitting} label={faq ? "Save Changes" : "Create FAQ"} />
     </form>
   );
 }

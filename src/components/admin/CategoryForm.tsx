@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Category } from "@/types/database";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import SubmitButton from "@/components/admin/SubmitButton";
 
 type ActionResult = { error: string | null } | undefined | void;
 
@@ -67,13 +68,7 @@ export default function CategoryForm({
         Active (visible in shop)
       </label>
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-foreground text-background px-6 py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
-      >
-        {submitting ? "Saving…" : category ? "Save Changes" : "Create Category"}
-      </button>
+      <SubmitButton submitting={submitting} label={category ? "Save Changes" : "Create Category"} />
     </form>
   );
 }

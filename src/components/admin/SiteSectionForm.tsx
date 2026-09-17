@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import type { SiteSection } from "@/types/database";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import SubmitButton from "@/components/admin/SubmitButton";
 
 type ActionResult = { error: string | null; success?: boolean } | undefined | void;
 
@@ -79,13 +80,7 @@ export default function SiteSectionForm({
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="bg-foreground text-background px-6 py-3 text-xs tracking-widest-xl uppercase disabled:opacity-50"
-      >
-        {submitting ? "Saving…" : "Save Changes"}
-      </button>
+      <SubmitButton submitting={submitting} label="Save Changes" />
     </form>
   );
 }
